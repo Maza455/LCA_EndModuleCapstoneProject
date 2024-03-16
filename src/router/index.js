@@ -13,7 +13,6 @@ import CareersView from '../views/CareersView.vue';
 import BooksView from '../views/BooksView.vue';
 import PhonesView from '../views/PhonesView.vue'
 import OrderView from '../views/OrderView.vue'
-import LoginSignupView from '../views/LoginSignupView.vue';
 
 const routes = [{
     path: '/',
@@ -50,7 +49,7 @@ const routes = [{
     name: 'category',
     component: CategoryView
   },
-  [{
+  {
       path: '/careers',
       name: 'careers',
       component: CareersView
@@ -69,13 +68,7 @@ const routes = [{
       path: '/orders',
       name: 'orders',
       component: OrderView
-    },
-    {
-      path: '/login-signup',
-      name: 'login-signup',
-      component: LoginSignupView
     }
-  ]
 ]
 
 const router = createRouter({

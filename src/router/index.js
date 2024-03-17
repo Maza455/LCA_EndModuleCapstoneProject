@@ -6,7 +6,7 @@ import HomeView from '../views/HomeView.vue';
 import AboutView from '../views/AboutView.vue';
 import ProductsView from '../views/ProductsView.vue';
 import AdminView from '../views/AdminView.vue';
-import CheckoutView from '../views/CheckoutView.vue';
+import CartView from '../views/CartView.vue';
 import ContactView from '../views/ContactView.vue';
 import CategoryView from '../views/CategoryView.vue';
 import CareersView from '../views/CareersView.vue';
@@ -35,9 +35,9 @@ const routes = [{
     component: AdminView
   },
   {
-    path: '/checkout',
-    name: 'checkout',
-    component: CheckoutView
+    path: '/cart',
+    name: 'cart',
+    component: CartView
   },
   {
     path: '/contact',

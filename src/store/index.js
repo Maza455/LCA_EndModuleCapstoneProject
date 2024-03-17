@@ -7,7 +7,8 @@ export default createStore({
     products: null,
     product: null,
     users: null,
-    user: null
+    user: null,
+    cart: []
   },
 
   mutations: {
@@ -24,23 +25,32 @@ export default createStore({
       state.user = value;
     },
     updateProduct(state, updatedProduct) {
-      state.products = state.products.map(product => (product.id === updatedProduct.id ? updatedProduct : product));
+      state.products = state.products.map(product => (product.prodID === updatedProduct.prodID ? updatedProduct : product));
     },
     deleteProduct(state, productId) {
-      state.products = state.products.filter(product => product.id !== productId);
+      state.products = state.products.filter(product => product.prodID !== productId);
     },
     addProduct(state, newProduct) {
       state.products.push(newProduct);
     },
     updateUser(state, updatedUser) {
-      state.users = state.users.map(user => (user.id === updatedUser.id ? updatedUser : user));
+      state.users = state.users.map(user => (user.userID === updatedUser.userID ? updatedUser : user));
     },
     deleteUser(state, userId) {
-      state.users = state.users.filter(user => user.id !== userId);
+      state.users = state.users.filter(user => user.userID !== userId);
     },
     addUser(state, newUser) {
       state.users.push(newUser);
-    }
+    },
+    addToCart(state, product) {
+        state.cart.push(product);
+    },
+    removeFromCart(state, product) {
+      const index = state.cart.findIndex(item => item.prodID === product.prodID);
+      if (index !== -1) {
+        state.cart.splice(index, 1);
+      }
+    },
   },
 
   actions: {
@@ -116,7 +126,7 @@ export default createStore({
       }
     },
     async updateUser(context, updatedUser) {
-      let res = await fetch(`${dataUrl}users/${updatedUser.id}`, {
+      let res = await fetch(`${dataUrl}users/${updatedUser.userID}`, {
         method: 'PATCH',
         body: JSON.stringify(updatedUser),
         headers: {
@@ -149,3 +159,4 @@ export default createStore({
     }
   }
 });
+

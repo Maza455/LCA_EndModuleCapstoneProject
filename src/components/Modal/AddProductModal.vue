@@ -1,9 +1,4 @@
 <template>
-    <div v-if="showModal">
-
-        <div v-if="isAddProductModal" class="modal">
-            <div class="modal-content">
-                <span class="close" @click="closeModal">&times;</span>
                 <div class="modal">
                     <div class="modal-content">
                         <h2>Add New Product</h2>
@@ -23,15 +18,11 @@
                             <label for="prodDesc">Description:</label>
                             <textarea v-model="newProduct.prodDesc" id="prodDesc"
                                 placeholder="Enter Description"></textarea>
-
-                            <!-- Add more input fields as needed -->
                         </form>
                         <button @click="addNewProduct">Add Product</button>
                     </div>
                     </div>
-                    </div>
-                </div>
-            </div>
+        
 </template>
 
 <script>
@@ -42,22 +33,13 @@ export default {
                 prodName: '',
                 prodQuantity: 0,
                 prodAmount: 0,
-                prodDesc: '',
-
-                showModal: false,
-                isAddProductModal: false
+                prodDesc: ''
             }
         };
     },
     methods: {
         addNewProduct() {
             this.$emit('save', this.newProduct);
-            this.showModal = true;
-        },
-        showAddProductModal() {
-            this.showModal = true;
-            this.isAddUserModal = false;
-            this.isAddProductModal = true;
         },
     }
 };

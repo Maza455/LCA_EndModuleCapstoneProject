@@ -46,7 +46,7 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/checkout" @click.prevent="showCheckoutModal"
+                        <router-link to="/cart" @click.prevent="showCheckoutModal"
                             class="nav-link active">Checkout</router-link>
                     </li>
                     <li class="nav-item">
@@ -105,7 +105,7 @@
                     </div>
 
                     <!-- User Login Form -->
-                    <div v-if="isLoginModal && !isAdminLogin" class="modal">
+                    <!-- <div v-if="isLoginModal && !isAdminLogin" class="modal">
                         <div class="modal-content">
                             <span class="close" @click="closeModal">&times;</span>
                             <h2>User Login</h2>
@@ -118,8 +118,8 @@
                                 <button @click.prevent="switchToUserLogin">Login_User</button>
                                 <input type="submit" value="Login">
                             </form>
-                        </div>
-                    </div>
+                        </div> -->
+                    <!-- </div> -->
                 </div>
             </div>
         </div>

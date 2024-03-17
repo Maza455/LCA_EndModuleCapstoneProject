@@ -23,7 +23,7 @@
                         <p>Description: {{ product.prodDesc }}</p>
                         <button @click="back(product)" class="back-button">Back</button>
                     </div>
-                    <button @click="addToCart(product)" class="btn btn-primary">Purchase</button>
+                    <button @click="addToCheckout(product)" class="btn btn-primary">Purchase</button>
                     <div class="quantity-container">
                         <button @click="updateQuantity(product, 'decrement')" class="quantity-button">-</button>
                         <span class="quantity">{{ product.quantity || 1 }}</span>
@@ -102,11 +102,26 @@ export default {
         searchProducts() {
             this.filteredProducts.sort((a, b) => a.prodName.localeCompare(b.prodName));
         },
-        addToCart(product) {
+        addToCheckout(product) {
             // Add the selected product to the shared state (e.g., Vuex store)
             this.$store.commit('addToCart', product);
-            // Redirect to the checkout page
-            this.$router.push('/checkout');
+
+            // Show alert message
+            alert(`${product.prodName} has been added to your cart!`);
+
+            // Redirect to the checkout page after a short delay to allow the alert to be seen
+            setTimeout(() => {
+                // Retrieve updated cart data from the store
+                const updatedCart = this.$store.state.cart;
+
+                // Check if updatedCart is defined and contains the added product
+                if (updatedCart && updatedCart.length > 0) {
+                    // Update your logic here to handle displaying the cart with selected products
+                    // You can set a flag or state variable to control the visibility of the cart section
+                } else {
+                    console.error('Product was not added to the cart.');
+                }
+            }, 1000); // 1 second delay
         },
         showLoginModal(product) {
             this.showModal = true;

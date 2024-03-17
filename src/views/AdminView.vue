@@ -1,177 +1,234 @@
 <template>
     <div>
-        <!-- Styled Modal Trigger Button -->
-        <button @click="showModal = true" class="modal-button">Open Modal</button>
-
-        <!-- Modal -->
-        <div v-if="showModal" class="modal">
-            <div class="modal-content">
-                <!-- Modal Close Button -->
-                <span @click="showModal = false" class="close">&times;</span>
-
-                <!-- Add Book Form -->
-                <input type="text" v-model="newBook.title" placeholder="Title">
-                <input type="text" v-model="newBook.edtn" placeholder="Edition">
-                <input type="number" v-model="newBook.price" placeholder="Price">
-                <input type="text" v-model="newBook.img" placeholder="Image URL">
-                <input type="text" v-model="newBook.year" placeholder="Year">
-                <input type="text" v-model="newBook.author" placeholder="Author">
-
-                <button @click="createBook">Add Book</button>
-
-                <!-- Display Books -->
-                <ul>
-                    <li v-for="(book, index) in sortedBooks" :key="index">
-                        {{ book.title }} - {{ book.price }}
-                        <button @click="updateBook(index)">Edit</button>
-                        <button @click="deleteBook(index)">Delete</button>
-                        <button @click="addToCart(index)">Add to Cart</button>
-                    </li>
-                </ul>
-
-                <!-- Cart Section -->
-                <h2>Cart</h2>
-                <ul>
-                    <li v-for="(item, index) in checkOut" :key="index">
-                        {{ item.quantity }} x {{ item.title }}
-                    </li>
-                </ul>
+        <button class="admin-btn" @click="showUsersTable">Users</button>
+        <button class="admin-btn" @click="showProductsTable">Products</button>
+        <hr class="text-white" />
+        <!-- Sort Items -->
+        <div class="container d-flex justify-content-start mb-3 mt-5 pt-4">
+            <div class="d-flex w-25 ms-3">
+                <label for="" class="form-label">Sort by Edition</label>
+                <select class="form-select" name="" id="sortEdition" @change="sortEdition">
+                    <option value="All">All</option>
+                    <option value="users">Users</option>
+                    <option value="products">Products</option>
+                </select>
+            </div>
+            <div class="d-flex w-25 ms-3">
+                <label for="" class="form-label">Sort Title</label>
+                <select class="form-select" name="" id="sortTitle" @change="sortTitle">
+                    <option value="ascending">Ascending</option>
+                    <option value="descending">Descending</option>
+                </select>
             </div>
         </div>
+
+        <button v-if="showAddProductBtn" @click="showAddProductModal">Add Product</button>
+        <button v-if="showAddUserBtn" @click="showAddUserModal">Add User</button>
+
+        <h2> Users </h2>
+        <!-- Users Table -->
+        <table v-if="users" id="usersTable">
+
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>Email</th>
+                    <th>Password</th>
+                    <th>User Role</th>
+                </tr>
+            </thead>
+            <!-- Table body for users -->
+            <tbody id="usersTableBody">
+                <tr v-for="user in users" :key="user.userID">
+                    <td>{{ user.userID }}</td>
+                    <td>{{ user.firstName }}</td>
+                    <td>{{ user.lastName }}</td>
+                    <td>{{ user.userAge }}</td>
+                    <td>{{ user.gender }}</td>
+                    <td>{{ user.emailAdd }}</td>
+                    <td> ******* </td>
+                    <td>{{ user.userRole }}</td>
+                    <td>
+                        <button @click="editUser(user)">Edit</button>
+                        <button @click="deleteUser(user)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <h2>Products</h2>
+        <!-- Products Table -->
+        <table v-if="products" id="productsTable">
+
+            <thead>
+                <tr>
+                    <th>Product ID</th>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Amount</th>
+                    <th>Description</th>
+                    <th>Image</th>
+
+                </tr>
+            </thead>
+            <tbody id="productsTableBody">
+                <tr v-for="product in products" :key="product.prodID">
+                    <td>{{ product.prodID }}</td>
+                    <td>{{ product.prodName }}</td>
+                    <td>{{ product.prodQuantity }}</td>
+                    <td>{{ product.prodAmount }}</td>
+                    <td>{{ product.prodDesc }}</td>
+                    <td>
+                        <img class="img-fluid w-25" :src="product.imageURL" :alt="product.prodName" />
+                        <button @click="editProduct(product)">Edit</button>
+                        <button @click="deleteProduct(product)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <EditUserModal v-if="showEditUserModal" :user="selectedUser" @save="saveEditedUser"></EditUserModal>
+        <AddUserModal v-if="showAddUserModal" @save="addNewUser"></AddUserModal>
+        <EditProductModal v-if="showEditProductModal" :product="selectedProduct" @save="saveEditedProduct">
+        </EditProductModal>
+        <AddProductModal v-if="showAddProductModal" @save="addNewProduct"></AddProductModal>
     </div>
 </template>
 
 <script>
+import EditUserModal from '@/components/Modal/EditUserModal.vue';
+import AddUserModal from '@/components/Modal/AddUserModal.vue';
+import EditProductModal from '@/components/Modal/EditProductModal.vue';
+import AddProductModal from '@/components/Modal/AddProductModal.vue';
 export default {
+    components: {
+        EditUserModal,
+        AddUserModal,
+        EditProductModal,
+        AddProductModal
+    },
+
     data() {
         return {
-            books: [],
-            checkOut: [],
-            newBook: {
-                title: '',
-                edtn: '',
-                price: 0,
-                img: '',
-                year: '',
-                author: '',
-            },
-            showModal: false,
+            showAddProductBtn: true,
+            showAddUserBtn: true,
+            showEditUserModal: false,
+            showAddUserModal: false,
+            showEditProductModal: false,
+            showAddProductModal: false,
+            selectedUser: null,
+            selectedProduct: null
         };
     },
-    methods: {
-        createBook() {
-            if (!this.newBook.title || !this.newBook.price || !this.newBook.img) {
-                alert("Please fill in all fields");
-                return;
-            }
-            this.books.push({ ...this.newBook });
-            // Use cookies to store books data
-            document.cookie = `books=${JSON.stringify(this.books)}`;
-            this.newBook = {
-                title: '',
-                edtn: '',
-                price: 0,
-                img: '',
-                year: '',
-                author: '',
-            };
-        },
-        updateBook(position) {
-            // Update the book at the specified position
-            if (!this.books[position]) {
-                alert("Invalid book position");
-                return;
-            }
-
-            const updatedBook = {
-                title: this.newBook.title,
-                edtn: this.newBook.edtn,
-                price: this.newBook.price,
-                img: this.newBook.img,
-                year: this.newBook.year,
-                author: this.newBook.author,
-            };
-
-            this.books.splice(position, 1, updatedBook);
-            localStorage.setItem("Books", JSON.stringify(this.books));
-        },
-        deleteBook(position) {
-            // Delete the book at the specified position
-            if (!this.books[position]) {
-                alert("Invalid book position");
-                return;
-            }
-
-            const confirmation = confirm(`Are you sure you want to remove ${this.books[position].title.toUpperCase()} from the list?`);
-
-            if (confirmation) {
-                this.books.splice(position, 1);
-                localStorage.setItem("Books", JSON.stringify(this.books));
-            }
-        },
-        addToCart(position) {
-            this.checkOut.push({
-                quantity: 1,
-                ...this.books[position]
-            });
-            localStorage.setItem("cart", JSON.stringify(this.checkOut));
-        },
-        sortEdition() {
-            // Implement sortEdition logic
-        },
-        sortName() {
-            // Implement sortName logic
-        },
-        sortPrice() {
-            // Implement sortPrice logic
-        },
-    },
     computed: {
-        sortedBooks() {
-            return this.books.slice().sort((a, b) => a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1);
+        products() {
+            return this.$store.state.products
+        },
+        users() {
+            return this.$store.state.users
         },
     },
+    methods: {
+        showUsersTable() {
+            this.showUsers = true;
+            this.showProducts = false;
+            this.showAddProductBtn = false;
+            this.showAddUserBtn = false;
+
+        },
+        showProductsTable() {
+            this.showUsers = false;
+            this.showProducts = true;
+            this.showAddProductBtn = false;
+            this.showAddUserBtn = false;
+
+        },
+        
+        
+        addNewProduct() {
+            this.showAddProductModal = false
+        },
+        addNewUser() {
+            this.showAddUserModal = false;
+        },
+        editUser(user) {
+            this.editingUser = { ...user };
+            this.showEditUserModal = true;
+            sessionStorage.setItem('users', JSON.stringify(this.users));
+        },
+        savedEditedUser() {
+            this.showEditUserModal = false;
+
+        },
+        deleteUser(user) {
+            if (confirm(`Are you sure you want to delete user ${user.firstName} ${user.lastName}?`)) {
+                const index = this.users.findIndex(u => u.userID === user.userID);
+                if (index !== -1) {
+                    this.users.splice(index, 1);
+                }
+            }
+            sessionStorage.setItem('users', JSON.stringify(this.users));
+        },
+        editProduct(product) {
+            this.editingProduct = { ...product };
+            this.showEditProductModal = true;
+            sessionStorage.setItem('products', JSON.stringify(this.products));
+        },
+        saveEditedProduct() {
+            this.showEditProductModal = false;
+        },
+        
+
+        deleteProduct(product) {
+            if (confirm(`Are you sure you want to delete ${product.prodName}?`)) {
+                const index = this.products.findIndex(p => p.prodID === product.prodID);
+                if (index !== -1) {
+                    this.products.splice(index, 1);
+                }
+            }
+            sessionStorage.setItem('products', JSON.stringify(this.products));
+        }
+    },
+    mounted() {
+        this.$store.dispatch('fetchProducts'),
+            this.$store.dispatch('fetchUsers')
+    }
 };
 </script>
 
-<style>
-/* CSS for modal styling */
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.modal-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-}
-
-.close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-}
-
-/* CSS for styled button */
-.modal-button {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
+<style scoped>
+.admin-btn {
+    background-color: indigo;
     border: none;
-    border-radius: 5px;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
     cursor: pointer;
 }
 
-.modal-button:hover {
-    background-color: #0056b3;
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #F2F2F2;
 }
 </style>

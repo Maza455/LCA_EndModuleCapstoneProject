@@ -1,24 +1,37 @@
 <template>
-    <div class="modal">
-        <div class="modal-content">
-            <h2>Add New Product</h2>
-            <label for="prodName">Product Name:</label>
-            <input v-model="newProduct.prodName" type="text" id="prodName" placeholder="Enter Product Name">
+    <div v-if="showModal">
 
-            <label for="prodQuantity">Quantity:</label>
-            <input v-model="newProduct.prodQuantity" type="number" id="prodQuantity" placeholder="Enter Quantity">
+        <div v-if="isAddProductModal" class="modal">
+            <div class="modal-content">
+                <span class="close" @click="closeModal">&times;</span>
+                <div class="modal">
+                    <div class="modal-content">
+                        <h2>Add New Product</h2>
+                        <form>
+                            <label for="prodName">Product Name:</label>
+                            <input v-model="newProduct.prodName" type="text" id="prodName"
+                                placeholder="Enter Product Name">
 
-            <label for="prodAmount">Amount:</label>
-            <input v-model="newProduct.prodAmount" type="number" id="prodAmount" placeholder="Enter Amount">
+                            <label for="prodQuantity">Quantity:</label>
+                            <input v-model="newProduct.prodQuantity" type="number" id="prodQuantity"
+                                placeholder="Enter Quantity">
 
-            <label for="prodDesc">Description:</label>
-            <textarea v-model="newProduct.prodDesc" id="prodDesc" placeholder="Enter Description"></textarea>
+                            <label for="prodAmount">Amount:</label>
+                            <input v-model="newProduct.prodAmount" type="number" id="prodAmount"
+                                placeholder="Enter Amount">
 
-            <!-- Add more input fields as needed -->
+                            <label for="prodDesc">Description:</label>
+                            <textarea v-model="newProduct.prodDesc" id="prodDesc"
+                                placeholder="Enter Description"></textarea>
 
-            <button @click="addNewProduct">Add Product</button>
-        </div>
-    </div>
+                            <!-- Add more input fields as needed -->
+                        </form>
+                        <button @click="addNewProduct">Add Product</button>
+                    </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
 </template>
 
 <script>
@@ -29,15 +42,23 @@ export default {
                 prodName: '',
                 prodQuantity: 0,
                 prodAmount: 0,
-                prodDesc: ''
-                // Add more fields as needed
+                prodDesc: '',
+
+                showModal: false,
+                isAddProductModal: false
             }
         };
     },
     methods: {
         addNewProduct() {
             this.$emit('save', this.newProduct);
-        }
+            this.showModal = true;
+        },
+        showAddProductModal() {
+            this.showModal = true;
+            this.isAddUserModal = false;
+            this.isAddProductModal = true;
+        },
     }
 };
 </script>

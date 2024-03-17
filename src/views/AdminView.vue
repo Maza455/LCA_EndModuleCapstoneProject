@@ -22,13 +22,16 @@
             </div>
         </div>
 
-        <button v-if="showAddProductBtn" @click="showAddProductModal">Add Product</button>
-        <button v-if="showAddUserBtn" @click="showAddUserModal">Add User</button>
+        <button class="addProductButton" @click="showAddProductModal = true">Add Product</button>
+        <AddProductModal v-if="showAddProductModal" @save="addNewProduct"></AddProductModal>
 
-        <h2> Users </h2>
+        <button class="addUserButton" @click="showAddUserModal = true">Add User</button>
+        <AddUserModal v-if="showAddUserModal" @save="addNewUser"></AddUserModal>
+
+        <h2 class="table-heading" > Users </h2>
         <!-- Users Table -->
         <table v-if="users" id="usersTable">
-
+            <!-- Table headers -->
             <thead>
                 <tr>
                     <th>User ID</th>
@@ -39,6 +42,7 @@
                     <th>Email</th>
                     <th>Password</th>
                     <th>User Role</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <!-- Table body for users -->
@@ -54,20 +58,19 @@
                     <td>{{ user.userRole }}</td>
                     <td>
                         <button @click="editUser(user)">Edit</button>
+                        <EditUserModal v-if="showEditUserModal" :user="selectedUser" @save="saveEditedUser">
+                        </EditUserModal>
                         <button @click="deleteUser(user)">Delete</button>
+
                     </td>
                 </tr>
             </tbody>
         </table>
-        <br>
-        <br>
-        <br>
-        <br>
 
-        <h2>Products</h2>
+        <h2 class="table-heading">Products</h2>
         <!-- Products Table -->
         <table v-if="products" id="productsTable">
-
+            <!-- Table headers -->
             <thead>
                 <tr>
                     <th>Product ID</th>
@@ -76,9 +79,10 @@
                     <th>Amount</th>
                     <th>Description</th>
                     <th>Image</th>
-
+                    <th>Action</th>
                 </tr>
             </thead>
+            <!-- Table body for products -->
             <tbody id="productsTableBody">
                 <tr v-for="product in products" :key="product.prodID">
                     <td>{{ product.prodID }}</td>
@@ -88,17 +92,18 @@
                     <td>{{ product.prodDesc }}</td>
                     <td>
                         <img class="img-fluid w-25" :src="product.imageURL" :alt="product.prodName" />
+                    </td>
+                    <td>
                         <button @click="editProduct(product)">Edit</button>
+                        <EditProductModal v-if="showEditProductModal" :product="selectedProduct"
+                            @save="saveEditedProduct">
+                        </EditProductModal>
                         <button @click="deleteProduct(product)">Delete</button>
                     </td>
                 </tr>
             </tbody>
         </table>
-        <EditUserModal v-if="showEditUserModal" :user="selectedUser" @save="saveEditedUser"></EditUserModal>
-        <AddUserModal v-if="showAddUserModal" @save="addNewUser"></AddUserModal>
-        <EditProductModal v-if="showEditProductModal" :product="selectedProduct" @save="saveEditedProduct">
-        </EditProductModal>
-        <AddProductModal v-if="showAddProductModal" @save="addNewProduct"></AddProductModal>
+
     </div>
 </template>
 
@@ -107,6 +112,7 @@ import EditUserModal from '@/components/Modal/EditUserModal.vue';
 import AddUserModal from '@/components/Modal/AddUserModal.vue';
 import EditProductModal from '@/components/Modal/EditProductModal.vue';
 import AddProductModal from '@/components/Modal/AddProductModal.vue';
+
 export default {
     components: {
         EditUserModal,
@@ -127,45 +133,58 @@ export default {
             selectedProduct: null
         };
     },
+
     computed: {
         products() {
-            return this.$store.state.products
+            return this.$store.state.products;
         },
         users() {
-            return this.$store.state.users
+            return this.$store.state.users;
         },
     },
+
     methods: {
         showUsersTable() {
-            this.showUsers = true;
-            this.showProducts = false;
             this.showAddProductBtn = false;
             this.showAddUserBtn = false;
-
         },
+
         showProductsTable() {
-            this.showUsers = false;
-            this.showProducts = true;
             this.showAddProductBtn = false;
             this.showAddUserBtn = false;
+        },
 
+        addNewProduct(newProductData) {
+            // Generate a unique ID for the new product
+            const newProductId = Math.floor(Math.random() * 1000); // You can use a more robust method for generating IDs
+
+            // Create a new product object with the provided data and the generated ID
+            const newProduct = {
+                prodID: newProductId,
+                prodName: newProductData.prodName,
+                prodQuantity: newProductData.prodQuantity,
+                prodAmount: newProductData.prodAmount,
+                prodDesc: newProductData.prodDesc
+                // Add more fields as needed
+            };
+
+            // Update the data store with the new product
+            this.$store.commit('ADD_PRODUCT', newProduct); // Assuming you are using Vuex for state management
+
+            // Close the modal after adding the new product
+            this.showAddProductModal = false;
         },
-        
-        
-        addNewProduct() {
-            this.showAddProductModal = false
-        },
+
         addNewUser() {
-            this.showAddUserModal = false;
+            this.showAddUserModal = true;
+        },
+        saveEditedUser() {
+            this.showEditUserModal = false;
         },
         editUser(user) {
             this.editingUser = { ...user };
             this.showEditUserModal = true;
             sessionStorage.setItem('users', JSON.stringify(this.users));
-        },
-        savedEditedUser() {
-            this.showEditUserModal = false;
-
         },
         deleteUser(user) {
             if (confirm(`Are you sure you want to delete user ${user.firstName} ${user.lastName}?`)) {
@@ -184,7 +203,7 @@ export default {
         saveEditedProduct() {
             this.showEditProductModal = false;
         },
-        
+
 
         deleteProduct(product) {
             if (confirm(`Are you sure you want to delete ${product.prodName}?`)) {
@@ -204,6 +223,29 @@ export default {
 </script>
 
 <style scoped>
+.addUserButton,
+.addProductButton {
+    display: block;
+    margin: 0 auto;
+}
+
+.addUserButton,
+.addProductButton {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.addUserButton:hover,
+.addProductButton:hover {
+    background-color: #0056b3;
+}
+
 .admin-btn {
     background-color: indigo;
     border: none;
@@ -216,9 +258,27 @@ export default {
     cursor: pointer;
 }
 
+button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
+}
+.table-heading {
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 th,

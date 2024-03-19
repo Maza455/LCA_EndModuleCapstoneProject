@@ -164,12 +164,12 @@ export default {
                 prodName: newProductData.prodName,
                 prodQuantity: newProductData.prodQuantity,
                 prodAmount: newProductData.prodAmount,
-                prodDesc: newProductData.prodDesc
-                // Add more fields as needed
+                prodDesc: newProductData.prodDesc,
+                prodImage: newProductData.imageURL
             };
 
             // Update the data store with the new product
-            this.$store.commit('ADD_PRODUCT', newProduct); // Assuming you are using Vuex for state management
+            this.$store.commit('ADD_PRODUCT', newProduct);
 
             // Close the modal after adding the new product
             this.showAddProductModal = false;

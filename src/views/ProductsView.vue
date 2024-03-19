@@ -116,8 +116,7 @@ export default {
 
                 // Check if updatedCart is defined and contains the added product
                 if (updatedCart && updatedCart.length > 0) {
-                    // Update your logic here to handle displaying the cart with selected products
-                    // You can set a flag or state variable to control the visibility of the cart section
+                   //
                 } else {
                     console.error('Product was not added to the cart.');
                 }

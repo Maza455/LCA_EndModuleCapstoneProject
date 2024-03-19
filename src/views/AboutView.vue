@@ -15,8 +15,8 @@
         </div>
       </div>
 
-      <h1 class="fadeIn mid-sz" style="text-align: center;">--Who E'm I and What I Do❤️--</h1>
-      <div class="aboutDesc fadeIn mid1-sz">ZukisaMaza.com is an E-commerce company that started in 2023.
+      <h1 class="fadeIn mid-sz" style="text-align: center;">--Who we're and What we Do❤️--</h1>
+      <div class="aboutDesc fadeIn mid1-sz">ZukisaMaza.com is an E-commerce company that started in 2024.
         ZukisaMaza is guided by four principles: customer obsession rather than competitor focus, passion for
         invention, commitment to operational excellence, and long-term thinking. We strive to have a positive
         impact on customers, employees, small businesses, the economy, and the communities where we’re located.
@@ -24,7 +24,7 @@
 
       <div class="w3-container w3-center DescContainerLeft" id="slideLeft"
         style="margin-right: auto; margin-left: auto; width: fit-content;">
-        <div class="DescBoxLeft mid2-sz">Zukiisa Maza...</div>
+        <div class="DescBoxLeft mid2-sz">Zukisa Maza...</div>
         <p class="mid3-sz" style="text-align: center; margin-top: 50px; color: rgb(128, 128, 128);">ZukisaMaza
           is a smart, passionate builder with different backgrounds and goals, who share a common desire to
           always be learning and inventing on behalf of our customers. We believe that if you’re not left with
@@ -34,7 +34,7 @@
 
       <div class="w3-container w3-center DescContainerRight" id="slideRight"
         style="margin-right: auto; margin-left: auto; width: fit-content;">
-        <div class="DescBoxRight mid2-sz">Why Choose Me</div>
+        <div class="DescBoxRight mid2-sz">Why Choose Us</div>
         <p class="mid3-sz" style="text-align: center; margin-top: 50px; color: rgb(128, 128, 128);">In
           ZukisaMaza, there is a wide range of options in the category, exclusively handpicked to help you
           find the best quality with the lowest prices. No more getting stuck in traffic jams, the order will

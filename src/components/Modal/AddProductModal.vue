@@ -1,28 +1,25 @@
 <template>
-                <div class="modal">
-                    <div class="modal-content">
-                        <h2>Add New Product</h2>
-                        <form>
-                            <label for="prodName">Product Name:</label>
-                            <input v-model="newProduct.prodName" type="text" id="prodName"
-                                placeholder="Enter Product Name">
+    <form @submit.prevent="addNewProduct">
+        <div class="modal">
+            <div class="modal-content">
+                <!-- <h2>Add New Product</h2> -->
+                <label for="prodName">Product Name:</label>
+                <input v-model="newProduct.prodName" type="text" id="prodName" placeholder="Enter Product Name">
 
-                            <label for="prodQuantity">Quantity:</label>
-                            <input v-model="newProduct.prodQuantity" type="number" id="prodQuantity"
-                                placeholder="Enter Quantity">
+                <label for="prodQuantity">Quantity:</label>
+                <input v-model="newProduct.prodQuantity" type="number" id="prodQuantity" placeholder="Enter Quantity">
 
-                            <label for="prodAmount">Amount:</label>
-                            <input v-model="newProduct.prodAmount" type="number" id="prodAmount"
-                                placeholder="Enter Amount">
+                <label for="prodAmount">Amount:</label>
+                <input v-model="newProduct.prodAmount" type="number" id="prodAmount" placeholder="Enter Amount">
 
-                            <label for="prodDesc">Description:</label>
-                            <textarea v-model="newProduct.prodDesc" id="prodDesc"
-                                placeholder="Enter Description"></textarea>
-                        </form>
-                        <button @click="addNewProduct">Add Product</button>
-                    </div>
-                    </div>
-        
+                <label for="prodDesc">Description:</label>
+                <textarea v-model="newProduct.prodDesc" id="prodDesc" placeholder="Enter Description"></textarea>
+
+                <!-- <button type="submit">Add Product</button> -->
+            </div>
+        </div>
+    </form>
+
 </template>
 
 <script>

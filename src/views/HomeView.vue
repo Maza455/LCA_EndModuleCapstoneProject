@@ -12,23 +12,21 @@
         </div>
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img src="../assets/imgs/download (12).jpg"
-              class="d-block w-100" alt="...">
+            <img src="https://i.postimg.cc/jdxw70B0/natural-science-books-500x286.webp" class="d-block w-100" alt="...">
             <div class="carousel-caption d-md-block">
               <h3>Find Best Deals</h3>
               <p>Eyyyyyyyy Maza</p>
             </div>
           </div>
           <div class="carousel-item">
-            <img src="../assets/imgs/Relativity-The-Special-and-Ge.jpg" class="d-block w-100" alt="...">
+            <img src="https://i.postimg.cc/c4Pv5grZ/fundamentals-of-chemistry.jpg" class="d-block w-100" alt="...">
             <div class="carousel-caption d-md-block">
               <h3>New User Offer</h3>
               <p>Hello world 60% @Zukisa!!!</p>
             </div>
           </div>
           <div class="carousel-item">
-            <img src="../assets/imgs/s24-ultra-black.jpeg"
-              class="d-block w-100" alt="..." style="width: 80px;">
+            <img src="../assets/imgs/s24-ultra-black.jpeg" class="d-block w-100" alt="..." style="width: 80px;">
             <div class="carousel-caption d-md-block">
               <h3>Think Less, Buy Now</h3>
               <p>Zukisa Maza</p>
@@ -56,26 +54,24 @@
         <div class="row">
           <div style="width:50%!important" class="col-lg-6 col-md-6 col-12  col-xxl-6 grow">
             <figure>
-              <img src="https://i.postimg.cc/qMNQRdMN/New-Arrival-Sale.png" alt="offer 1"
+              <img src="https://i.postimg.cc/y8zZ83Bj/1118475801.jpg" alt="offer 1" class="img-fluid content rounded">
+            </figure>
+          </div>
+          <div style="width:50%!important" class="col-lg-6 col-md-6 col-12  col-xxl-6 grow">
+            <figure>
+              <img src="https://i.postimg.cc/KvGfvWN4/refurb-iphone-12-black-2020-AV1.jpg" alt="offer 1"
                 class="img-fluid content rounded">
             </figure>
           </div>
           <div style="width:50%!important" class="col-lg-6 col-md-6 col-12  col-xxl-6 grow">
             <figure>
-              <img src="https://i.postimg.cc/K8ZKXBkB/download-10.jpg" alt="offer 1" class="img-fluid content rounded">
-            </figure>
-          </div>
-          <div style="width:50%!important" class="col-lg-6 col-md-6 col-12  col-xxl-6 grow">
-            <figure>
-              <img
-                src="https://i.postimg.cc/661JWspM/desktop-wallpaper-los-angeles-games-los-angeles-14177-iphone-los-angeles-aesthetic-iphone-thumbnail.jpg"
-                alt="offer 1" class="img-fluid content rounded">
-            </figure>
-          </div>
-          <div style="width:50%!important" class="col-lg-6 col-md-6 col-12  col-xxl-6 grow">
-            <figure>
-              <img src="https://i.postimg.cc/HLwkvL3j/back-school-sales-designs-1198-68.jpg" alt="offer 1"
+              <img src="https://i.postimg.cc/c4Pv5grZ/fundamentals-of-chemistry.jpg" alt="offer 1"
                 class="img-fluid content rounded">
+            </figure>
+          </div>
+          <div style="width:50%!important" class="col-lg-6 col-md-6 col-12  col-xxl-6 grow">
+            <figure>
+              <img src="https://i.postimg.cc/YSYYxN3J/44311441.jpg" alt="offer 1" class="img-fluid content rounded">
             </figure>
           </div>
         </div>
@@ -89,7 +85,8 @@
       <div class="row py-3">
         <div class="col md-3">
           <div class="card mx-auto" style="width:18rem; margin-bottom: 5%;">
-            <img src="https://i.postimg.cc/7YBSjnM2/IMG-0371c-1024x734.jpg" class="card-img" alt="mobile">
+            <img src="https://i.postimg.cc/x8x6SGB6/main-qimg-7a97d8a3e8a9b6553b23f47a5c0c9461.webp" class="card-img"
+              alt="mobile">
             <div class="card-body">
               <h5 class="card-title">Books</h5>
               <p class="card-text">Learn the basics of programming with no prior knowledge required. Ideal
@@ -99,9 +96,7 @@
         </div>
         <div class="col md-3">
           <div class="card mx-auto" style="width:18rem; margin-bottom: 5%;">
-            <img
-              src="https://i.postimg.cc/7PRyVKBW/mockup-featuring-two-iphones-12-pro-against-a-solid-color-background-5011-el1.png"
-              class="card-img" alt="mobile">
+            <img src="https://i.postimg.cc/y8zZ83Bj/1118475801.jpg" class="card-img" alt="mobile">
             <div class="card-body">
               <h5 class="card-title">Top Deals</h5>
               <p class="card-text">iCare Plus for iPhone extends your warranty coverage to two years.
@@ -112,7 +107,7 @@
         </div>
         <div class="col md-3">
           <div class="card mx-auto" style="width:18rem; margin-bottom: 5%;">
-            <img src="https://i.postimg.cc/cJKnrtqv/USD-cyber-security-ethical-hacking.jpg" class="card-img"
+            <img src="https://i.postimg.cc/x8x6SGB6/main-qimg-7a97d8a3e8a9b6553b23f47a5c0c9461.webp" class="card-img"
               alt="mobile">
             <div class="card-body">
               <h5 class="card-title">Ethical Hacker</h5>

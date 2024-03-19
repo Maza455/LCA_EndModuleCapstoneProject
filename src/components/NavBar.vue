@@ -35,9 +35,8 @@
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><router-link to="/careers" class="dropdown-item">Careers</router-link></li>
                             <li><router-link to="/books" class="dropdown-item">Books</router-link></li>
-                            <li><router-link to="/mobile" class="dropdown-item">Phones</router-link></li>
-                            <li><router-link to="/order" @click.prevent="showOrderModal"
-                                    class="dropdown-item">Order</router-link></li>
+                            <li><router-link to="/phones" class="dropdown-item">Phones</router-link></li>
+                            <li><router-link to="/orders" class="dropdown-item">Order</router-link></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>

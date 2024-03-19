@@ -8,7 +8,6 @@ import ProductsView from '../views/ProductsView.vue';
 import AdminView from '../views/AdminView.vue';
 import CartView from '../views/CartView.vue';
 import ContactView from '../views/ContactView.vue';
-import CategoryView from '../views/CategoryView.vue';
 import CareersView from '../views/CareersView.vue';
 import BooksView from '../views/BooksView.vue';
 import PhonesView from '../views/PhonesView.vue'
@@ -45,11 +44,6 @@ const routes = [{
     component: ContactView
   },
   {
-    path: '/category',
-    name: 'category',
-    component: CategoryView
-  },
-  {
       path: '/careers',
       name: 'careers',
       component: CareersView
@@ -64,11 +58,11 @@ const routes = [{
       name: 'phones',
       component: PhonesView
     },
-    {
-      path: '/orders',
-      name: 'orders',
-      component: OrderView
-    }
+  {
+    path: '/orders',
+    name: 'orders',
+    component: OrderView
+  }
 ]
 
 const router = createRouter({

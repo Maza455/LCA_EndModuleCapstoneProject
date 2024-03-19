@@ -30,7 +30,24 @@
 
         </div>
         <div v-else class="my-4">
-            <p class="text-lg">No products selected. Please add products to your cart.</p>
+            <!-- Empty Cart Message -->
+            <div v-if="selectedProducts && selectedProducts.length === 0"
+                class="cart-content-module_empty-cart-message_3HVJ-" data-ref="empty-cart-message">
+                <div class="empty-list-message " data-ref="empty-list-message">
+                    <div class="grid-x empty-list-panel empty-list-message-module_panel_EdYDK">
+                        <div class="cell empty-list-message-module_content-container_11jr5">
+                            <img src="https://shopfront.takealot.com/af70590427b88f68b6c0b66be0cf344279d8aa5f/static/media/src/images/cart/empty-cart.svg-a3f63604a3d49f7b220a.svg"
+                                alt="Empty shopping cart" class="empty-list-message-module_svg-image_20HwM"
+                                data-ref="empty-box-image">
+                            <div class="empty-list-message-module_children_1wCTP">
+                                <p class="cart-content-module_empty-message_2aBS6">Your shopping cart is empty</p>
+                            </div>
+                            <a data-react-link="true" class="button address-default-button"
+                                data-ref="continue-shopping-button" href="/">Continue Shopping</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -83,14 +100,11 @@ export default {
 
 .product-card {
     width: 25%;
-    /* Set the width of the card to 25% */
     block-size: 25%;
-    /* Set the vertical size of the card to 25% */
     background-color: #f9f9f9;
     border-radius: 8px;
     padding: 16px;
     margin: 10px;
-    /* Adjust margin for spacing */
 }
 
 .product-image img {
@@ -102,7 +116,44 @@ export default {
 
 .product-details {
     margin-top: 10px;
-    /* Adjust margin for spacing */
+}
+
+.cart-content-module_empty-cart-message_3HVJ- {
+    background-color: #f7f7f7;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.empty-list-message {
+    margin: 0 auto;
+    max-width: 400px;
+}
+
+.empty-list-message-module_svg-image_20HwM {
+    width: 150px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.cart-content-module_empty-message_2aBS6 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.button.address-default-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: indigo;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.button.address-default-button:hover {
+    background-color: indigo;
 }
 
 .btn {

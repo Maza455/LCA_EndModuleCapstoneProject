@@ -23,10 +23,58 @@
                     <li class="nav-item">
                         <router-link to="/products" class="nav-link active">Products</router-link>
                     </li>
-                    <li class="nav-item">
-                        <router-link to="/admin" @click.prevent="showLoginModal"
-                            class="nav-link active">Admin</router-link>
-                    </li>
+
+                    <ul class="navbar-nav list-group-horizontal mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="offcanvas" data-bs-target="#searchBar"
+                                aria-controls="searchBar">
+                                <i class="bi bi-search"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="settingsDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-gear">Login's</i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-custom no-collapse text-center p-3"
+                                aria-labelledby="settingsDropdown">
+                                <div v-if="logged">
+                                    <li @click="logOut" class="dropdown-item">Logout</li>
+                                    <li v-if="!isAdmin">
+                                        <div class="d-grid">
+                                            <router-link to="/account" class="btn btn-success">
+                                                My account
+                                            </router-link>
+                                        </div>
+                                    </li>
+                                </div>
+                                <div v-else>
+                                    <li>
+                                        <div class="d-grid">
+                                            <router-link to="/account/login" class="btn btn-success">
+                                                Login
+                                            </router-link>
+                                        </div>
+                                    </li>
+                                    <li class="nav-item">
+                                        <router-link to="/admin" @click.prevent="showLoginModal"
+                                            class="btn btn-success">Admin</router-link>
+                                    </li>
+                                    <li>
+                                        <router-link to="/account/register" class="dropdown-item">
+                                            New user? <u>Register now</u>
+                                        </router-link>
+                                    </li>
+                                </div>
+                            </ul>
+                        </li>
+                        <!-- <li v-if="!isAdmin" class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="offcanvas" data-bs-target="#cartBar"
+                                aria-controls="cartBar">
+                                <i class="bi bi-cart"></i>
+                            </a>
+                        </li> -->
+                    </ul>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -37,11 +85,11 @@
                             <li><router-link to="/books" class="dropdown-item">Books</router-link></li>
                             <li><router-link to="/phones" class="dropdown-item">Phones</router-link></li>
                             <li><router-link to="/orders" class="dropdown-item">Order</router-link></li>
+
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><router-link @click.prevent="showSignupModal" to="/login-signup"
-                                    class="dropdown-item">Signup</router-link></li>
+
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -52,6 +100,8 @@
                         <router-link to="/contact" class="nav-link active">Contact</router-link>
                     </li>
                 </ul>
+
+
 
                 <!-- Login/Register Modals -->
                 <div v-if="showModal">

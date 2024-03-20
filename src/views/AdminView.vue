@@ -28,7 +28,7 @@
         <button class="addUserButton" @click="showAddUserModal = true">Add User</button>
         <AddUserModal v-if="showAddUserModal" @save="addNewUser"></AddUserModal>
 
-        <h2 class="table-heading" > Users </h2>
+        <h2 class="table-heading"> Users </h2>
         <!-- Users Table -->
         <table v-if="users" id="usersTable">
             <!-- Table headers -->
@@ -60,6 +60,7 @@
                         <button @click="editUser(user)">Edit</button>
                         <EditUserModal v-if="showEditUserModal" :user="selectedUser" @save="saveEditedUser">
                         </EditUserModal>
+
                         <button @click="deleteUser(user)">Delete</button>
 
                     </td>
@@ -108,116 +109,65 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 import EditUserModal from '@/components/Modal/EditUserModal.vue';
 import AddUserModal from '@/components/Modal/AddUserModal.vue';
 import EditProductModal from '@/components/Modal/EditProductModal.vue';
 import AddProductModal from '@/components/Modal/AddProductModal.vue';
 
 export default {
+    data() {
+        return {
+            selectedUser: '',
+            showEditUserModal: false
+        };
+    },
     components: {
         EditUserModal,
         AddUserModal,
         EditProductModal,
         AddProductModal
     },
-
-    data() {
-        return {
-            showAddProductBtn: true,
-            showAddUserBtn: true,
-            showEditUserModal: false,
-            showAddUserModal: false,
-            showEditProductModal: false,
-            showAddProductModal: false,
-            selectedUser: null,
-            selectedProduct: null
-        };
-    },
-
     computed: {
-        products() {
-            return this.$store.state.products;
-        },
-        users() {
-            return this.$store.state.users;
-        },
+        ...mapState(['users', 'products'])
     },
-
     methods: {
-        showUsersTable() {
-            this.showAddProductBtn = false;
-            this.showAddUserBtn = false;
-        },
-
-        showProductsTable() {
-            this.showAddProductBtn = false;
-            this.showAddUserBtn = false;
-        },
-
-        addNewProduct(newProductData) {
-            // Generate a unique ID for the new product
-            const newProductId = Math.floor(Math.random() * 1000); // You can use a more robust method for generating IDs
-
-            // Create a new product object with the provided data and the generated ID
-            const newProduct = {
-                prodID: newProductId,
-                prodName: newProductData.prodName,
-                prodQuantity: newProductData.prodQuantity,
-                prodAmount: newProductData.prodAmount,
-                prodDesc: newProductData.prodDesc,
-                prodImage: newProductData.imageURL
-            };
-
-            // Update the data store with the new product
-            this.$store.commit('ADD_PRODUCT', newProduct);
-
-            // Close the modal after adding the new product
-            this.showAddProductModal = false;
-        },
-
-        addNewUser() {
+        ...mapActions(['fetchUsers', 'fetchProducts', 'addUser', 'updateUser', 'deleteUser', 'addProduct', 'updateProduct', 'deleteProduct']),
+        // User CRUD Operations
+        async addUserHandler(newUser) {
             this.showAddUserModal = true;
-        },
-        saveEditedUser() {
-            this.showEditUserModal = false;
+            await this.addUser(newUser);
         },
         editUser(user) {
-            this.editingUser = { ...user };
+            this.selectedUser = user;
             this.showEditUserModal = true;
-            sessionStorage.setItem('users', JSON.stringify(this.users));
+            this.$emit('openEditUserModal', this.selectedUser);
         },
-        deleteUser(user) {
-            if (confirm(`Are you sure you want to delete user ${user.firstName} ${user.lastName}?`)) {
-                const index = this.users.findIndex(u => u.userID === user.userID);
-                if (index !== -1) {
-                    this.users.splice(index, 1);
-                }
-            }
-            sessionStorage.setItem('users', JSON.stringify(this.users));
+        async saveEditedUserHandler(updatedUser) {
+            await this.updateUser(updatedUser);
         },
-        editProduct(product) {
-            this.editingProduct = { ...product };
-            this.showEditProductModal = true;
-            sessionStorage.setItem('products', JSON.stringify(this.products));
+        async deleteUserHandler(userId) {
+            await this.deleteUser(userId);
         },
-        saveEditedProduct() {
-            this.showEditProductModal = false;
+        async addProductHandler(newProduct) {
+            await this.addProduct(newProduct);
+            this.showAddProductModal = true;
         },
-
-
-        deleteProduct(product) {
-            if (confirm(`Are you sure you want to delete ${product.prodName}?`)) {
-                const index = this.products.findIndex(p => p.prodID === product.prodID);
-                if (index !== -1) {
-                    this.products.splice(index, 1);
-                }
-            }
-            sessionStorage.setItem('products', JSON.stringify(this.products));
+        editProductHandler(product) {
+            this.selectedProduct = product;
+            this.$emit('openEditProductModal', this.selectedProduct);
+        },
+        async saveEditedProductHandler(updatedProduct) {
+            await this.updateProduct(updatedProduct);
+            this.$emit('closeEditProductModal');
+        },
+        async deleteProductHandler(productId) {
+            await this.deleteProduct(productId);
         }
     },
-    mounted() {
-        this.$store.dispatch('fetchProducts'),
-            this.$store.dispatch('fetchUsers')
+    created() {
+        this.fetchUsers();
+        this.fetchProducts();
     }
 };
 </script>

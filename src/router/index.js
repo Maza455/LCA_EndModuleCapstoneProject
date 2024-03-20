@@ -12,6 +12,7 @@ import CareersView from '../views/CareersView.vue';
 import BooksView from '../views/BooksView.vue';
 import PhonesView from '../views/PhonesView.vue'
 import OrderView from '../views/OrderView.vue'
+import store from "../store/index.js";
 
 const routes = [{
     path: '/',
@@ -44,6 +45,38 @@ const routes = [{
     component: ContactView
   },
   {
+    path: "/account",
+    name: "account",
+    component: () => import("../views/AccountView.vue"),
+    meta: {
+      requiresAuth: true,
+      requiresBuyer: true,
+      title: "AccountView",
+    },
+  },
+  {
+    path: "/account/register",
+    name: "registration",
+    component: () => import("../views/RegistrationView.vue"),
+    meta: {
+      requiresGuest: true,
+      title: "RegistrationView",
+    },
+  }, {
+    path: "/account/login",
+    name: "login",
+    component: () => import("../views/LoginView.vue"),
+    meta: {
+      requiresGuest: true,
+      title: "LoginView",
+    },
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "NotFound",
+    component: () => import("../views/NotFoundView.vue"),
+  },
+  {
       path: '/careers',
       name: 'careers',
       component: CareersView
@@ -68,6 +101,28 @@ const routes = [{
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+});
+
+router.beforeEach((to) => {
+  if (
+    (to.meta.requiresAuth || to.meta.requiresAdmin) &&
+    !store.state.auth.logged
+  ) {
+    return "/account/login";
+  } else if (
+    (to.meta.requiresGuest && store.state.auth.logged) ||
+    (to.meta.requiresAdmin && !store.state.auth.isAdmin) ||
+    (to.meta.requiresBuyer && store.state.auth.isAdmin)
+  ) {
+    return "/";
+  }
+});
+
+router.beforeEach((to) => {
+  const baseTitle = process.env.VUE_APP_TITLE;
+  document.title = to.meta.title ?
+    `${to.meta.title} - ${baseTitle}` :
+    baseTitle;
 });
 
 export default router;

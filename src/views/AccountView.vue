@@ -1,0 +1,26 @@
+<template>
+    <div class="container mt-5">
+        <h1 class="text-center">My account</h1>
+        <hr />
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Order history</h4>
+                <router-link to="/account/orders" alt="button" class="btn btn-success text-uppercase text-dark">
+                    View orders
+                </router-link>
+            </div>
+            <div class="col-md-6">
+                <h4>Account details</h4>
+                <router-link to="/account/addresses" alt="button" class="btn btn-success text-uppercase text-dark">
+                    View addresses
+                </router-link>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    name: "AccountComp",
+};
+</script>

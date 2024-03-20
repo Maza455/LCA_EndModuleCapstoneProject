@@ -1,6 +1,8 @@
 import {
   createStore
 } from 'vuex';
+// import auth from "./module/auth.js";
+
 const dataUrl = 'https://lc-capstoneendmodueproject-1.onrender.com/'
 export default createStore({
   state: {
@@ -8,8 +10,12 @@ export default createStore({
     product: null,
     users: null,
     user: null,
-    cart: []
+    cart: [],
+    orderDetails: {}
   },
+  // module: {
+  //   auth
+  // },
 
   mutations: {
     setProducts(state, value) {
@@ -51,6 +57,9 @@ export default createStore({
         state.cart.splice(index, 1);
       }
     },
+    saveOrderDetails(state, orderDetails) {
+      state.orderDetails = orderDetails;
+    }
   },
 
   actions: {
@@ -74,7 +83,7 @@ export default createStore({
       }
     },
     async updateProduct(context, updatedProduct) {
-      let res = await fetch(`${dataUrl}products/${updatedProduct.id}`, {
+      let res = await fetch(`${dataUrl}products/${updatedProduct.prodID}`, {
         method: 'PATCH',
         body: JSON.stringify(updatedProduct),
         headers: {
@@ -158,5 +167,6 @@ export default createStore({
       }
     }
   }
+  
 });
 

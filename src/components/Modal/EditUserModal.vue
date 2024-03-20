@@ -24,9 +24,7 @@
             <label for="password">Password:</label>
             <input v-model="editedUser.userPwd" type="password" id="password" placeholder="Enter Password">
 
-            <!-- Add more input fields as needed -->
-
-            <button @click="saveEditedUser">Save</button>
+            <button @click="editUser">Save</button>
         </div>
     </div>
 </template>
@@ -40,8 +38,14 @@ export default {
         };
     },
     methods: {
-        saveEditedUser() {
-            this.$emit('save', this.editedUser);
+        editUser() {
+            this.$store.dispatch('updateUser', this.editedUser)
+                .then(() => {
+                    this.$emit('user-updated', this.editedUser);
+                })
+                .catch(error => {
+                    console.error('Error updating user:', error);
+                });
         }
     }
 };

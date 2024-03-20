@@ -59,22 +59,14 @@ export default {
     data() {
         return {
             filterName: 'Last 1 months',
-            noOrders: true
+            noOrders: true,
+            orders: []
         };
     },
     methods: {
         filterOrders() {
-
-            const currDate = new Date();
-
-            const tMsAgo = new Date();
-            tMsAgo.setMonth(currDate.getMonth() - 3);
-
-            const filteredOrders = this.orders.filter(order => {
-                const orderDate = new Date(order.date);
-                return orderDate >= tMsAgo && orderDate <= currDate;
-            });
-            this.orders = filteredOrders;
+            this.orders = this.$store.state.orderDetails;
+            this.noOrders = false;
         }
     }
 }

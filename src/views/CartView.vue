@@ -22,8 +22,13 @@
                 <form @submit.prevent="submitForm" class="payment-form">
                     <label for="email">Email:</label>
                     <input type="email" id="email" v-model="email" required>
+
+                    <label for="phone">Phone Number:</label>
+                    <input type="tel" id="phone" v-model="phone" required>
+
                     <label for="address">Address for Delivery:</label>
                     <textarea id="address" v-model="address" required></textarea>
+
                     <button type="submit" class="btn btn-success mt-4">Submit</button>
                 </form>
             </div>
@@ -58,6 +63,7 @@ export default {
         return {
             showPaymentForm: false,
             email: '',
+            phone: '',
             address: ''
         };
     },
@@ -76,6 +82,16 @@ export default {
         submitForm() {
             alert("Thank you for confirming! Please check your email for the order details.");
             this.showPaymentForm = false;
+
+            const orderDetails = {
+                products: this.selectedProducts,
+                phone: this.phone,
+                email: this.email,
+                address: this.address
+            };
+
+            this.$store.commit('saveOrderDetails', orderDetails); // Save order details to the store
+            this.$router.push('/orders');
         },
         removeProduct(product) {
             if (product.prodQuantity > 0) {
@@ -173,6 +189,14 @@ export default {
 .btn-success {
     background-color: #28a745;
     color: #fff;
+}
+
+.input-field {
+    padding: 8px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
 }
 
 .payment-form label,

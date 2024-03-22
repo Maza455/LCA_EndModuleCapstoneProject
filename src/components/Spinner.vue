@@ -80,8 +80,8 @@ export default {
             },
             ],
             counter: 0,
-            interval: 3,
-            stop: 10
+            interval: null,
+            elapsedTime: 0
         }
     },
     computed: {
@@ -89,6 +89,10 @@ export default {
     },
     created() {
         this.interval = setInterval(() => {
+            this.elapsedTime += 100; // Increment elapsed time by 100 milliseconds
+            if (this.elapsedTime >= 5000) { // 5 seconds in milliseconds
+                clearInterval(this.interval); // Stop the spinner
+            }
             this.counter++;
             this.circles = this.circles.map((item, index) => ({
                 ...item,
@@ -96,9 +100,9 @@ export default {
             }));
         }, 100);
     },
-    // destroyed() {
-    //   clearInterval(this.interval);
-    // }
+    beforeUnmount() {
+       clearInterval(this.interval);
+     }
 }
 </script>
 

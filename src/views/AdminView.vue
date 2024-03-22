@@ -60,7 +60,7 @@
                     <td>
                         <button @click="editUser(user)">Edit</button>
                         <EditUser v-if="showModal && isEditUserModal" @save="saveUser" @close="closeModal" />
-                        <button @click="deleteUserHandler(user.userName)">Delete</button>
+                        <button @click="deleteUserHandler(user)">Delete</button>
                     </td>
                 </tr>
             </tbody>
@@ -95,7 +95,7 @@
                     <td>
                         <button @click="editProduct(product)">Edit</button>
                         <EditProduct v-if="showModal && isEditProductModal" @save="saveProduct" @close="closeModal" />
-                        <button @click="deleteProductHandler(product.prodID)">Delete</button>
+                        <button @click="deleteProductHandler(product)">Delete</button>
                     </td>
                 </tr>
             </tbody>
@@ -118,6 +118,7 @@ export default {
             showModal: false,
             isAddUserModal: false,
             isAddProductModal: false,
+            isEditProductModal: false,
             editedUser: null,
             editedProduct: null,
         };
@@ -152,11 +153,23 @@ export default {
             this.isAddUserModal = false;
             this.isAddProductModal = false;
         },
-        deleteUserHandler(userID) {
-            this.$store.dispatch('deleteUser',userID);
+        deleteUserHandler() {
+            this.$store.dispatch('deleteUser', this.user)
+                .then(() => {
+                    alert('Product deleted successfully');
+                })
+                .catch(error => {
+                    console.error('Error deleting user:', error);
+                });
         },
-        deleteProductHandler(prodID) {
-            this.$store.dispatch('deleteProduct', prodID)
+        deleteProductHandler() {
+            this.$store.dispatch('deleteProduct', this.product)
+                .then(() => {
+                    alert('Product deleted successfully');
+                })
+                .catch(error => {
+                    console.error('Error deleting product:', error);
+                });
         },
         editUser(user) {
             this.editedUser = { ...user };

@@ -38,7 +38,7 @@
     </div>
 </template>
 
-<script>
+<script type='module'>
 import axios from "@/service/index.js";
 
 export default {
@@ -61,7 +61,6 @@ export default {
     },
 };
 </script> -->
-
 
 <template>
     <div>

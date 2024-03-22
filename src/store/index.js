@@ -3,7 +3,7 @@ import {
 } from 'vuex';
 // import auth from "./module/auth.js";
 
-const dataUrl = 'https://lc-capstoneendmodueproject-1.onrender.com/'
+const dataUrl = 'https://lca-endmodulecapstoneproject-1.onrender.com/'
 export default createStore({
   state: {
     products: null,
@@ -64,13 +64,19 @@ export default createStore({
 
   actions: {
     // Products CRUD operations
-    async fetchProducts(context) {
-      let res = await fetch(`${dataUrl}products`);
-      let {
-        results
-      } = await res.json();
-      if (results) {
-        context.commit('setProducts', results);
+    async fetchProducts({
+      commit
+    }) {
+      try {
+        const response = await fetch(`${dataUrl}products`);
+        const {
+          results
+        } = await response.json();
+        if (results) {
+          commit('setProducts', results);
+        }
+      } catch (error) {
+        console.error('Error fetching products:', error);
       }
     },
     async fetchProduct(context, id) {
@@ -166,7 +172,11 @@ export default createStore({
         context.commit('addUser', newUser)
       }
     }
-  }
+  },
+  // getters: {
+  //   users: state => state.users,
+  //   products: state => state.products
+  // }
   
 });
 

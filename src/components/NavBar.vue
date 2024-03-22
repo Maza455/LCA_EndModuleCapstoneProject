@@ -2,8 +2,8 @@
     <nav class="navbar navbar-expand-lg navbar-light" style="background: indigo;">
         <div class="container-fluid">
             <router-link to="/">
-                <img src="https://i.postimg.cc/JznRsq0R/Screenshot-2024-02-22-135719.png" alt="logo" width="45"
-                    height="35" class="d-inline-block align-text-top mr-2 navbar-logo" />
+                <img src="../assets/imgs/Screenshot 2024-03-22 133209.png" alt="logo" width="45" height="35"
+                    class="d-inline-block align-text-top mr-2 navbar-logo" />
             </router-link>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -21,7 +21,8 @@
                         <router-link to="/about" class="nav-link active">About</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/products" class="nav-link active">Products</router-link>
+                        <router-link to="/products" @click.prevent="showCheckoutModal" class=" nav-link
+                            active">Products</router-link>
                     </li>
 
                     <ul class="navbar-nav list-group-horizontal mb-2 mb-lg-0">
@@ -46,7 +47,8 @@
                                 <div v-else>
                                     <li>
                                         <div class="d-grid">
-                                            <router-link to="/account/login" class="btn btn-success">
+                                            <router-link to="/products" @click.prevent="showCheckoutModal" class="
+                                                btn btn-success">
                                                 Login
                                             </router-link>
                                         </div>
@@ -56,7 +58,7 @@
                                             class="btn btn-success">Admin</router-link>
                                     </li>
                                     <li>
-                                        <router-link to="/account/register" class="dropdown-item">
+                                        <router-link to="/login" class="dropdown-item">
                                             New user? <u>Register now</u>
                                         </router-link>
                                     </li>
@@ -71,8 +73,8 @@
                         </li>
                     </ul>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" @click.prevent="showCheckoutModal" id="
+                            navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Category
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -88,8 +90,7 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/cart" @click.prevent="showCheckoutModal"
-                            class="nav-link active">Checkout</router-link>
+                        <router-link to="/cart" class="nav-link active">Checkout</router-link>
                     </li>
                     <li class="nav-item">
                         <router-link to="/contact" class="nav-link active">Contact</router-link>

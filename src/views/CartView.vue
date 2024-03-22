@@ -30,8 +30,10 @@
 
                 <button @click="submitForm" class="btn btn-success mt-4">Submit</button>
             </div>
-
         </div>
+
+        
+
         <div v-else class="my-4">
             <!-- Empty Cart Message -->
             <div v-if="selectedProducts && selectedProducts.length === 0"
@@ -123,9 +125,9 @@ export default {
 }
 
 .product-image {
-    width: 100%;
+    display: block;
+    width: 25%;
     height: 60%;
-    /* Adjust height as needed */
     overflow: hidden;
 }
 

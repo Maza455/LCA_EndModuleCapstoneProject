@@ -1,6 +1,6 @@
 <template>
   <NavBar />
-  <!-- <Spinner /> -->
+  <Spinner />
   <main class="container-fluid">
     <router-view />
   </main>
@@ -10,12 +10,12 @@
 <script>
 import NavBar from './components/NavBar';
 import Footer from './components/Footer.vue';
-// import Spinner from './components/Spinner.vue';
+import Spinner from './components/Spinner.vue';
 export default {
   components: {
     NavBar,
     Footer,
-    // Spinner
+    Spinner
   }
 }
 </script>

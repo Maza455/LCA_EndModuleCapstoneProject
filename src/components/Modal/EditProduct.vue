@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
     <div>
         <form @submit.prevent="editProduct">
             <h2>Edit Product</h2>
@@ -15,7 +15,7 @@
             <textarea v-model="editedProduct.prodDesc" id="prodDesc" placeholder="Enter Description"></textarea>
 
 
-            <button type="submit">Save</button>
+            <button type="submit" @click="editProduct">Save</button>
             </form>
     </div>
 </template>
@@ -70,20 +70,4 @@ textarea {
 button {
     margin-top: 10px;
 }
-</style> -->
-
-<template>
-    <div>
-
-    </div>
-</template>
-
-<script>
-    export default {
-        
-    }
-</script>
-
-<style lang="scss" scoped>
-
 </style>

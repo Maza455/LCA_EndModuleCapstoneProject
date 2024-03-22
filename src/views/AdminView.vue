@@ -60,7 +60,7 @@
                     <td>
                         <button @click="editUser(user)">Edit</button>
                         <EditUser v-if="showModal && isEditUserModal" @save="saveUser" @close="closeModal" />
-                        <button @click="deleteUser(user.userID)">Delete</button>
+                        <button @click="deleteUserHandler(user.userName)">Delete</button>
                     </td>
                 </tr>
             </tbody>
@@ -95,7 +95,7 @@
                     <td>
                         <button @click="editProduct(product)">Edit</button>
                         <EditProduct v-if="showModal && isEditProductModal" @save="saveProduct" @close="closeModal" />
-                        <button @click="deleteProduct(product.prodID)">Delete</button>
+                        <button @click="deleteProductHandler(product.prodID)">Delete</button>
                     </td>
                 </tr>
             </tbody>
@@ -118,15 +118,25 @@ export default {
             showModal: false,
             isAddUserModal: false,
             isAddProductModal: false,
-            editingUser: null,
-            editingProduct: null,
+            editedUser: null,
+            editedProduct: null,
         };
     },
 
+    computed: {
+        ...mapState(['users', 'products'])
+    },
     methods: {
-
         ...mapActions(['fetchUsers', 'fetchProducts', 'addUser', 'updateUser', 'deleteUser', 'addProduct', 'updateProduct', 'deleteProduct']),
 
+        async fetchData() {
+            try {
+                await this.fetchUsers();
+                await this.fetchProducts();
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        },
         saveUser(newUser) {
             this.users.push(newUser);
             this.saveDataToStorage('users', this.users);
@@ -142,20 +152,18 @@ export default {
             this.isAddUserModal = false;
             this.isAddProductModal = false;
         },
-        deleteUser(userID) {
-            this.users = this.users.filter(user => user.userID !== userID);
-            this.saveDataToStorage('users', this.users);
+        deleteUserHandler(userID) {
+            this.$store.dispatch('deleteUser',userID);
         },
-        deleteProduct(prodID) {
-            this.products = this.products.filter(product => product.prodID !== prodID);
-            this.saveDataToStorage('products', this.products);
+        deleteProductHandler(prodID) {
+            this.$store.dispatch('deleteProduct', prodID)
         },
         editUser(user) {
-            this.editingUser = user;
+            this.editedUser = { ...user };
             this.showModal = true;
         },
         editProduct(product) {
-            this.editingProduct = product;
+            this.editedProduct = { ...product };
             this.showModal = true
         },
         async showUsersTable() {
@@ -189,7 +197,12 @@ export default {
         },
         getDataFromStorage(key) {
             const data = localStorage.getItem(key);
-            return data ? JSON.parse(data) : [];
+            try {
+                return data ? JSON.parse(data) : [];
+            } catch (error) {
+                console.error('Error parsing JSON data:', error);
+                return [];
+            }
         },
     },
     components: {
@@ -198,10 +211,8 @@ export default {
         'EditUser': EditUser,
         'EditProduct': EditProduct,
     },
-    computed: {
-        ...mapState(['users', 'products'])
-    },
     created() {
+        this.fetchData()
         this.showUsersTable();
         this.showProductsTable();
         this.users = this.getDataFromStorage('users');

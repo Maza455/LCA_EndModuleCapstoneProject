@@ -65,7 +65,10 @@ export default {
     },
     methods: {
         filterOrders() {
-            this.orders = this.$store.state.orderDetails;
+            this.orders = [
+                { orderID: 1, prodName: '', prodAmount: 0},
+                {orderID: 2, prodName: '', prodAmount: 0}
+            ]
             this.noOrders = false;
         }
     }

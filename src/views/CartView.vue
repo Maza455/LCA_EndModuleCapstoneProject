@@ -18,19 +18,17 @@
             <p class="text-lg font-bold mt-4">Total Amount: R{{ calculateTotalAmount }}</p>
             <button @click="confirmPayment" class="btn btn-success mt-4">Confirm Payment</button>
 
-            <div v-if="showPaymentForm" class="my-4">
-                <form @submit.prevent="submitForm" class="payment-form">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" v-model="email" required>
+            <div v-if="showPaymentForm" class="payment-form">
+                <label for="email">Email:</label>
+                <input type="email" id="email" v-model="email" required>
 
-                    <label for="phone">Phone Number:</label>
-                    <input type="tel" id="phone" v-model="phone" required>
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" v-model="phone" required>
 
-                    <label for="address">Address for Delivery:</label>
-                    <textarea id="address" v-model="address" required></textarea>
+                <label for="address">Address for Delivery:</label>
+                <textarea id="address" v-model="address" required></textarea>
 
-                    <button type="submit" class="btn btn-success mt-4">Submit</button>
-                </form>
+                <button @click="submitForm" class="btn btn-success mt-4">Submit</button>
             </div>
 
         </div>
@@ -48,7 +46,7 @@
                                 <p class="cart-content-module_empty-message_2aBS6">Your shopping cart is empty</p>
                             </div>
                             <a data-react-link="true" class="button address-default-button"
-                                data-ref="continue-shopping-button" href="/">Continue Shopping</a>
+                                data-ref="continue-shopping-button" href="/products">Continue Shopping</a>
                         </div>
                     </div>
                 </div>
@@ -81,7 +79,6 @@ export default {
         },
         submitForm() {
             alert("Thank you for confirming! Please check your email for the order details.");
-            this.showPaymentForm = false;
 
             const orderDetails = {
                 products: this.selectedProducts,
@@ -90,7 +87,9 @@ export default {
                 address: this.address
             };
 
-            this.$store.commit('saveOrderDetails', orderDetails); // Save order details to the store
+            sessionStorage.setItem('orderDetails', JSON.stringify(orderDetails));
+
+            this.$store.commit('clearCart');
             this.$router.push('/orders');
         },
         removeProduct(product) {
@@ -123,11 +122,11 @@ export default {
     margin: 10px;
 }
 
-.product-image img {
+.product-image {
     width: 100%;
-    height: auto;
-    object-fit: cover;
-    border-radius: 8px;
+    height: 60%;
+    /* Adjust height as needed */
+    overflow: hidden;
 }
 
 .product-details {

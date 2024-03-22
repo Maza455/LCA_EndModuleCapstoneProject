@@ -3,6 +3,7 @@
         <button class="admin-btn" @click="showUsersTable">Users</button>
         <button class="admin-btn" @click="showProductsTable">Products</button>
         <hr class="text-white" />
+
         <!-- Sort Items -->
         <div class="container d-flex justify-content-start mb-3 mt-5 pt-4">
             <div class="d-flex w-25 ms-3">
@@ -22,14 +23,14 @@
             </div>
         </div>
 
-        <button class="addProductButton" @click="showAddProductModal = true">Add Product</button>
-        <AddProductModal v-if="showAddProductModal" @save="addNewProduct"></AddProductModal>
+        <button class="addProductButton" @click="showModal = true; isAddProductModal = true">Add Product</button>
+        <AddProduct v-if="showModal && isAddProductModal" @save="saveProduct" @close="closeModal" />
 
-        <button class="addUserButton" @click="showAddUserModal = true">Add User</button>
-        <AddUserModal v-if="showAddUserModal" @save="addNewUser"></AddUserModal>
+        <button class="addUserButton" @click="showModal = true; isAddUserModal = true">Add User</button>
+        <AddUser v-if="showModal && isAddUserModal" @save="saveUser" @close="closeModal" />
 
-        <h2 class="table-heading"> Users </h2>
         <!-- Users Table -->
+        <h2 class="table-heading">Users</h2>
         <table v-if="users" id="usersTable">
             <!-- Table headers -->
             <thead>
@@ -54,22 +55,19 @@
                     <td>{{ user.userAge }}</td>
                     <td>{{ user.gender }}</td>
                     <td>{{ user.emailAdd }}</td>
-                    <td> ******* </td>
+                    <td>*******</td>
                     <td>{{ user.userRole }}</td>
                     <td>
                         <button @click="editUser(user)">Edit</button>
-                        <EditUserModal v-if="showEditUserModal" :user="selectedUser" @save="saveEditedUser">
-                        </EditUserModal>
-
-                        <button @click="deleteUser(user)">Delete</button>
-
+                        <EditUser v-if="showModal && isEditUserModal" @save="saveUser" @close="closeModal" />
+                        <button @click="deleteUser(user.userID)">Delete</button>
                     </td>
                 </tr>
             </tbody>
         </table>
 
-        <h2 class="table-heading">Products</h2>
         <!-- Products Table -->
+        <h2 class="table-heading">Products</h2>
         <table v-if="products" id="productsTable">
             <!-- Table headers -->
             <thead>
@@ -96,79 +94,120 @@
                     </td>
                     <td>
                         <button @click="editProduct(product)">Edit</button>
-                        <EditProductModal v-if="showEditProductModal" :product="selectedProduct"
-                            @save="saveEditedProduct">
-                        </EditProductModal>
-                        <button @click="deleteProduct(product)">Delete</button>
+                        <EditProduct v-if="showModal && isEditProductModal" @save="saveProduct" @close="closeModal" />
+                        <button @click="deleteProduct(product.prodID)">Delete</button>
                     </td>
                 </tr>
             </tbody>
         </table>
+
 
     </div>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import EditUserModal from '@/components/Modal/EditUserModal.vue';
-import AddUserModal from '@/components/Modal/AddUserModal.vue';
-import EditProductModal from '@/components/Modal/EditProductModal.vue';
-import AddProductModal from '@/components/Modal/AddProductModal.vue';
+import AddUser from '@/components/Modal/AddUser.vue';
+import AddProduct from '@/components/Modal/AddProduct.vue';
+import EditUser from '@/components/Modal/EditUser.vue'
+import EditProduct from '@/components/Modal/EditProduct.vue'
 
 export default {
     data() {
         return {
-            selectedUser: '',
-            showEditUserModal: false
+            showModal: false,
+            isAddUserModal: false,
+            isAddProductModal: false,
+            editingUser: null,
+            editingProduct: null,
         };
     },
+
+    methods: {
+
+        ...mapActions(['fetchUsers', 'fetchProducts', 'addUser', 'updateUser', 'deleteUser', 'addProduct', 'updateProduct', 'deleteProduct']),
+
+        saveUser(newUser) {
+            this.users.push(newUser);
+            this.saveDataToStorage('users', this.users);
+            this.closeModal();
+        },
+        saveProduct(newProduct) {
+            this.products.push(newProduct);
+            this.saveDataToStorage('products', this.products);
+            this.closeModal();
+        },
+        closeModal() {
+            this.showModal = false;
+            this.isAddUserModal = false;
+            this.isAddProductModal = false;
+        },
+        deleteUser(userID) {
+            this.users = this.users.filter(user => user.userID !== userID);
+            this.saveDataToStorage('users', this.users);
+        },
+        deleteProduct(prodID) {
+            this.products = this.products.filter(product => product.prodID !== prodID);
+            this.saveDataToStorage('products', this.products);
+        },
+        editUser(user) {
+            this.editingUser = user;
+            this.showModal = true;
+        },
+        editProduct(product) {
+            this.editingProduct = product;
+            this.showModal = true
+        },
+        async showUsersTable() {
+            try {
+                await this.fetchUsers();
+            } catch (error) {
+                console.error('Error fetching users data:', error);
+            }
+        },
+        async showProductsTable() {
+            try {
+                await this.fetchProducts();
+            } catch (error) {
+                console.error('Error fetching products data:', error);
+            }
+        },
+        sortEdition(edition) {
+            if (edition === 'Users') {
+                this.showUsersTable = true;
+                this.showProductsTable = false;
+            } else if (edition === 'Products') {
+                this.showUsersTable = false;
+                this.showProductsTable = true;
+            } else {
+                this.showUsersTable = true;
+                this.showProductsTable = true;
+            }
+        },
+        saveDataToStorage(key, data) {
+            localStorage.setItem(key, JSON.stringify(data));
+        },
+        getDataFromStorage(key) {
+            const data = localStorage.getItem(key);
+            return data ? JSON.parse(data) : [];
+        },
+    },
     components: {
-        EditUserModal,
-        AddUserModal,
-        EditProductModal,
-        AddProductModal
+        'AddUser': AddUser,
+        'AddProduct': AddProduct,
+        'EditUser': EditUser,
+        'EditProduct': EditProduct,
     },
     computed: {
         ...mapState(['users', 'products'])
     },
-    methods: {
-        ...mapActions(['fetchUsers', 'fetchProducts', 'addUser', 'updateUser', 'deleteUser', 'addProduct', 'updateProduct', 'deleteProduct']),
-        // User CRUD Operations
-        async addUserHandler(newUser) {
-            this.showAddUserModal = true;
-            await this.addUser(newUser);
-        },
-        editUser(user) {
-            this.selectedUser = user;
-            this.showEditUserModal = true;
-            this.$emit('openEditUserModal', this.selectedUser);
-        },
-        async saveEditedUserHandler(updatedUser) {
-            await this.updateUser(updatedUser);
-        },
-        async deleteUserHandler(userId) {
-            await this.deleteUser(userId);
-        },
-        async addProductHandler(newProduct) {
-            await this.addProduct(newProduct);
-            this.showAddProductModal = true;
-        },
-        editProductHandler(product) {
-            this.selectedProduct = product;
-            this.$emit('openEditProductModal', this.selectedProduct);
-        },
-        async saveEditedProductHandler(updatedProduct) {
-            await this.updateProduct(updatedProduct);
-            this.$emit('closeEditProductModal');
-        },
-        async deleteProductHandler(productId) {
-            await this.deleteProduct(productId);
-        }
-    },
     created() {
-        this.fetchUsers();
-        this.fetchProducts();
-    }
+        this.showUsersTable();
+        this.showProductsTable();
+        this.users = this.getDataFromStorage('users');
+        this.products = this.getDataFromStorage('products');
+    },
+
 };
 </script>
 

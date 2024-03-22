@@ -1,9 +1,9 @@
-<template>
-    <div class="modal">
-        <div class="modal-content">
+<!-- <template>
+    <div>
+        <form @submit.prevent="editProduct">
             <h2>Edit Product</h2>
             <label for="prodName">Product Name:</label>
-            <input v-model="editedProduct.prodName" type="text" id="prodName" placeholder="Enter Product Name">
+            <input v-model="editedProduct.prodName" type="text" id="prodName" placeholder="Enter Product Name" required>
 
             <label for="prodQuantity">Quantity:</label>
             <input v-model="editedProduct.prodQuantity" type="number" id="prodQuantity" placeholder="Enter Quantity">
@@ -14,10 +14,9 @@
             <label for="prodDesc">Description:</label>
             <textarea v-model="editedProduct.prodDesc" id="prodDesc" placeholder="Enter Description"></textarea>
 
-            <!-- Add more input fields as needed -->
 
-            <button @click="saveEditedProduct">Save</button>
-        </div>
+            <button type="submit">Save</button>
+            </form>
     </div>
 </template>
 
@@ -30,7 +29,7 @@ export default {
         };
     },
     methods: {
-        saveEditedProduct() {
+        editProduct() {
             this.$emit('save', this.editedProduct);
         }
     }
@@ -71,4 +70,20 @@ textarea {
 button {
     margin-top: 10px;
 }
+</style> -->
+
+<template>
+    <div>
+
+    </div>
+</template>
+
+<script>
+    export default {
+        
+    }
+</script>
+
+<style lang="scss" scoped>
+
 </style>

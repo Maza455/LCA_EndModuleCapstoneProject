@@ -1,5 +1,5 @@
 import axios from "axios";
-import store from "../store/index2.js";
+import store from "../store/module/index.js";
 
 const URL = "https://lc-capstoneendmodueproject-1.onrender.com/";
 

@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div class="container mt-5">
         <h3 class="text-center mb-4">My account</h3>
         <div class="row justify-content-center">
@@ -67,4 +67,20 @@ export default {
         ...mapActions(["loggedIn"]),
     },
 };
+</script> -->
+
+<template>
+    <div>
+
+    </div>
+</template>
+
+<script>
+    export default {
+        
+    }
 </script>
+
+<style lang="scss" scoped>
+
+</style>

@@ -2,8 +2,8 @@
     <nav class="navbar navbar-expand-lg navbar-light" style="background: indigo;">
         <div class="container-fluid">
             <router-link to="/">
-                <img src="https://i.postimg.cc/HxFKfh56/Proctor.png" alt="logo" width="45" height="35"
-                    class="d-inline-block align-text-top mr-2 navbar-logo" />
+                <img src="https://i.postimg.cc/JznRsq0R/Screenshot-2024-02-22-135719.png" alt="logo" width="45"
+                    height="35" class="d-inline-block align-text-top mr-2 navbar-logo" />
             </router-link>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -25,12 +25,7 @@
                     </li>
 
                     <ul class="navbar-nav list-group-horizontal mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" data-bs-toggle="offcanvas" data-bs-target="#searchBar"
-                                aria-controls="searchBar">
-                                <i class="bi bi-search"></i>
-                            </a>
-                        </li>
+
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="settingsDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
@@ -68,12 +63,12 @@
                                 </div>
                             </ul>
                         </li>
-                        <!-- <li v-if="!isAdmin" class="nav-item">
+                        <li v-if="!isAdmin" class="nav-item">
                             <a href="#" class="nav-link" data-bs-toggle="offcanvas" data-bs-target="#cartBar"
                                 aria-controls="cartBar">
                                 <i class="bi bi-cart"></i>
                             </a>
-                        </li> -->
+                        </li>
                     </ul>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -154,7 +149,7 @@
                     </div>
 
                     <!-- User Login Form -->
-                    <!-- <div v-if="isLoginModal && !isAdminLogin" class="modal">
+                    <div v-if="isLoginModal && !isAdminLogin" class="modal">
                         <div class="modal-content">
                             <span class="close" @click="closeModal">&times;</span>
                             <h2>User Login</h2>
@@ -167,8 +162,8 @@
                                 <button @click.prevent="switchToUserLogin">Login_User</button>
                                 <input type="submit" value="Login">
                             </form>
-                        </div> -->
-                    <!-- </div> -->
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -179,11 +174,13 @@
 export default {
     data() {
         return {
-            showModal: false,
-            isLoginModal: false,
-            isSignupModal: false,
-            isAdminLogin: false
-        };
+      showModal: false,
+      isSignupModal: false,
+      isLoginModal: false,
+      isAdminLogin: false,
+      logged: false,
+      isAdmin: false
+    };
     },
     methods: {
         showLoginModal() {
